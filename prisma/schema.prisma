@@ -12,33 +12,30 @@ datasource db {
   provider = "postgresql"
 }
 
-
-model User { 
-  id      Int      @id @default(autoincrement()) 
-  email   String   @unique
-  password  String
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
   tasks    Task[]
-} 
-
+}
 
 model Task {
   id          Int       @id @default(autoincrement())
-
   user_id     Int
   user        User      @relation(fields: [user_id], references: [id])
-
   task        String
-  description String?
-
+  description String
   due_date    DateTime?
+  category    Category
   completed   Boolean   @default(false)
-
   created_at  DateTime  @default(now())
   updated_at  DateTime  @updatedAt
 }
 
-
-enum Role { 
-  USER 
-  ADMIN 
-} 
+enum Category {
+  Work
+  Home
+  Fittness
+  Family
+  Personal
+}
